@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import NewInput from './NewInput';
 
 const App = () => {
-  const [currStudent, setCurrStudent] = useState([Math.random() * 100000]);
+  const [currStudent, setCurrStudent] = useState([{id:Math.random()*100000,values:{name:'',age:''}}]);
 
   function removeOne(button_id) {
-    setCurrStudent(currStudent.filter(id => id !== button_id));
+    setCurrStudent(currStudent.filter(student => student.id !== button_id));
   }
 
   function addMore(e) {
     e.preventDefault();
-    setCurrStudent([...currStudent, Math.random() * 100000]);
+    setCurrStudent([...currStudent,{id: Math.random() * 100000,values:{name:'',age:''}}]);
   }
-  function console(e){
+  function handleInputChange(id,newValues){
+    setCurrStudent(currStudent.map(student=>student.id===id?{...student,values:newValues}:student))
+  }
+  function handleSubmit(e){
     {
       e.preventDefault();
-      currStudent.map((id)=>{
-      console.log();(<NewInput key={id} div_id={id} removeOne={removeOne} />)
-      })
+    
+      console.log(currStudent)
+    
     }
   }
 
@@ -25,10 +28,10 @@ const App = () => {
     <div>
        <form>
         {
-          currStudent.map(id => <NewInput key={id} div_id={id} removeOne={removeOne} />)
+          currStudent.map(student => <NewInput key={student.id} div_id={student.id} removeOne={removeOne}   onInputChange={handleInputChange} />)
         }
         <button onClick={addMore}>Add More...</button>
-        <button onClick={console} type="submit">Submit</button>
+        <button onClick={handleSubmit} type="submit">Submit</button>
        </form>
     </div>
   )

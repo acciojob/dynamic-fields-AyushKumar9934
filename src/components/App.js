@@ -19,7 +19,7 @@ const App = () => {
     {
       e.preventDefault();
     
-      console.log(currStudent)
+      console.log(currStudent.map(student => student.values));
     
     }
   }
